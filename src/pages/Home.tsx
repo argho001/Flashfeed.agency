@@ -12,25 +12,38 @@ const Home = () => {
     { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/ffffff', hex: '#ffffff' },
     { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB', hex: '#61DAFB' },
     { name: 'Tailwind', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4', hex: '#06B6D4' },
-    { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n/EA445A', hex: '#EA445A' },
-    { name: 'Make', icon: 'https://cdn.simpleicons.org/make/A521FF', hex: '#A521FF' },
     { name: 'OpenAI', icon: 'https://cdn.simpleicons.org/openai/10A37F', hex: '#10A37F' },
     { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3ECF8E', hex: '#3ECF8E' },
-    { name: 'Anthropic', icon: 'https://cdn.simpleicons.org/anthropic/D97757', hex: '#D97757' }
+    { name: 'HTML5', icon: 'https://cdn.simpleicons.org/html5/E34F26', hex: '#E34F26' },
+    { name: 'CSS3', icon: 'https://cdn.simpleicons.org/css3/1572B6', hex: '#1572B6' },
+    { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E', hex: '#F7DF1E' },
+    { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/5FA04E', hex: '#5FA04E' },
+    { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E', hex: '#F24E1E' },
+    { name: 'Vercel', icon: 'https://cdn.simpleicons.org/vercel/ffffff', hex: '#ffffff' },
+    { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB', hex: '#3776AB' },
+    { name: 'Django', icon: 'https://cdn.simpleicons.org/django/092E20', hex: '#092E20' },
+    { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n/EA445A', hex: '#EA445A' },
+    { name: 'Make', icon: 'https://cdn.simpleicons.org/make/A521FF', hex: '#A521FF' }
   ];
 
   const projects = [
     {
-      title: 'Dental Care',
+      title: 'Dental Care Pro',
       category: 'Healthcare / Landing Page Design',
-      image: '/Image-1.jpg',
-      color: 'bg-blue-950'
+      image: '/mockups/dental.png',
+      color: 'bg-blue-900'
+    },
+    {
+      title: 'Aura Fintech',
+      category: 'Financial / Mobile App Design',
+      image: '/mockups/fintech.png',
+      color: 'bg-purple-900'
     },
     {
       title: 'Best Burger',
       category: 'Restaurant / Website Design',
-      image: '/image-2.jpg',
-      color: 'bg-gray-950'
+      image: '/mockups/burger.png',
+      color: 'bg-amber-900'
     }
   ];
 
@@ -62,7 +75,7 @@ const Home = () => {
       {/* Hero Section */}
       <div className="relative w-full overflow-hidden">
         <DataStreamBackground />
-        <section className="px-6 py-32 md:py-48 max-w-7xl mx-auto relative flex flex-col items-center text-center z-10">
+        <section className="px-6 py-20 md:py-32 max-w-7xl mx-auto relative flex flex-col items-center text-center z-10">
           <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -70,7 +83,7 @@ const Home = () => {
           className="max-w-5xl z-10"
         >
           <h1 className="text-6xl md:text-8xl font-display font-bold leading-[1.1] mb-8 tracking-tighter flex flex-wrap justify-center gap-x-4 md:gap-x-6">
-            {['We', 'build', 'digital', 'products', 'that'].map((word, i) => (
+            {['We', 'build', 'what', 'your', 'business', 'needs'].map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ opacity: 0.2, filter: 'blur(10px)' }}
@@ -84,14 +97,14 @@ const Home = () => {
             <motion.span
               initial={{ opacity: 0.2, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
-              transition={{ duration: 0.8, delay: 5 * 0.15 }}
+              transition={{ duration: 0.8, delay: 6 * 0.15 }}
               className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 w-full mt-2"
             >
-              drive growth.
+              to grow.
             </motion.span>
           </h1>
           <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            FlashFeed is a premium digital agency. We combine stunning design, robust engineering, and AI automation to help modern companies scale faster.
+            FlashFeed is a digital agency. We craft beautiful software and websites that help your business scale.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
@@ -108,8 +121,8 @@ const Home = () => {
       {/* Tech Stack Ticker */}
       <section className="py-12 border-y border-white/5 overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-teal-500/5 pointer-events-none blur-3xl opacity-50" />
-        <div className="flex whitespace-nowrap animate-scroll items-center relative z-10">
-          {[...techStack, ...techStack, ...techStack].map((tech, i) => (
+        <div className="flex whitespace-nowrap animate-scroll items-center relative z-10 w-fit">
+          {[...techStack, ...techStack].map((tech, i) => (
             <div key={i} className="mx-12 flex items-center gap-4 group cursor-default hover:scale-110 transition-transform duration-300">
               <img 
                 src={tech.icon} 
@@ -140,7 +153,7 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {projects.map((project, i) => (
             <motion.div
               key={i}
@@ -244,7 +257,7 @@ const Home = () => {
           100% { transform: translateX(-50%); }
         }
         .animate-scroll {
-          animation: scroll 30s linear infinite;
+          animation: scroll 20s linear infinite;
         }
       `}} />
     </div>

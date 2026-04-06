@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Zap } from 'lucide-react';
+import { Menu, X, Zap, Instagram, Twitter, Linkedin, Github } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 const Navbar = () => {
@@ -72,35 +72,72 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-white border-b border-gray-100 p-6 md:hidden flex flex-col gap-4 shadow-xl"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/98 backdrop-blur-2xl md:hidden flex flex-col px-8 pt-24"
           >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
+            {/* Close Button */}
+            <div className="absolute top-0 right-0 p-6">
+              <button 
                 onClick={() => setIsOpen(false)}
-                className={cn(
-                  'text-lg font-medium py-2',
-                  location.pathname === link.path ? 'text-blue-600' : 'text-gray-600'
-                )}
+                className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                aria-label="Close menu"
               >
-                {link.name}
-              </Link>
-            ))}
-            <Link
-              to="/contact"
-              onClick={() => setIsOpen(false)}
-              className="bg-black text-white px-6 py-3 rounded-full text-center font-medium mt-2"
-            >
-              Start Project
-            </Link>
+                <X className="w-8 h-8" />
+              </button>
+            </div>
+
+            {/* Menu Links */}
+            <div className="flex flex-col gap-6">
+              {navLinks.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <Link
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      'text-4xl font-display font-medium tracking-tight transition-colors',
+                      location.pathname === link.path 
+                        ? 'text-white' 
+                        : 'text-gray-500 hover:text-white'
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Footer Area */}
+            <div className="mt-auto pb-12 space-y-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="space-y-4"
+              >
+                <div className="h-px bg-white/5 w-full" />
+                <p className="text-gray-500 text-sm font-medium uppercase tracking-widest">Connect</p>
+                <a href="mailto:contact.flashfeed@gmail.com" className="text-lg text-white hover:text-blue-400 transition-colors block">
+                  contact.flashfeed@gmail.com
+                </a>
+                <div className="flex gap-6 mt-4">
+                  <a href="#" className="text-gray-500 hover:text-white transition-colors"><Linkedin className="w-5 h-5" /></a>
+                  <a href="#" className="text-gray-500 hover:text-white transition-colors"><Instagram className="w-5 h-5" /></a>
+                  <a href="#" className="text-gray-500 hover:text-white transition-colors"><Github className="w-5 h-5" /></a>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

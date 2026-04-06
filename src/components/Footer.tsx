@@ -30,7 +30,7 @@ const Footer = () => {
               <span className="font-display font-bold text-2xl tracking-tighter text-white">FLASHFEED</span>
             </Link>
             <p className="text-gray-500 text-sm max-w-xs leading-relaxed">
-              A premium digital agency. We craft beautiful software and websites that help your business scale.
+              A digital agency. We craft beautiful software and websites that help your business scale.
             </p>
           </div>
 
