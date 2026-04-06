@@ -104,7 +104,7 @@ const Home = () => {
             </motion.span>
           </h1>
           <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-            FlashFeed is a digital agency. We craft beautiful software and websites that help your business scale.
+            FlashFeed is a digital growth agency. We build websites, create marketing strategies, and automate business processes to help growing businesses scale faster.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
