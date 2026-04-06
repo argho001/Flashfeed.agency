@@ -26,7 +26,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
+    <>
+      <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4',
         scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-3' : 'bg-transparent'
@@ -64,13 +65,15 @@ const Navbar = () => {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden p-2"
+          className="md:hidden p-2 text-white"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
+
+      </nav>
 
       {/* Mobile Nav Overlay */}
       <AnimatePresence>
@@ -80,7 +83,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/98 backdrop-blur-2xl md:hidden flex flex-col px-8 pt-24"
+            className="fixed inset-0 z-[60] bg-black/98 backdrop-blur-2xl md:hidden flex flex-col px-8 pt-24"
           >
             {/* Close Button */}
             <div className="absolute top-0 right-0 p-6">
@@ -141,7 +144,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 
