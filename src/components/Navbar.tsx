@@ -55,12 +55,12 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link
-            to="/contact"
+          <a
+            href="tel:+8801752330084"
             className="bg-white text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-gray-200 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
           >
-            Get started
-          </Link>
+            +8801752330084
+          </a>
         </div>
 
         {/* Mobile Menu Toggle */}

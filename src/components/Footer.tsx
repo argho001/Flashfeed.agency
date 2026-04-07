@@ -48,6 +48,7 @@ const Footer = () => {
               <h4 className="text-white font-semibold mb-2">Contact Info</h4>
               <span className="text-gray-500 block">contact.flashfeed@gmail.com</span>
               <span className="text-gray-500 block">+8801933773897</span>
+              <span className="text-gray-500 block">+8801752330084</span>
               <span className="text-gray-500 block leading-tight">
                 DIT Project <br/> Merul Badda, Dhaka
               </span>

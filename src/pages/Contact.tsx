@@ -80,6 +80,7 @@ const Contact = () => {
                   <div className="pt-1">
                     <h4 className="text-lg font-display font-bold text-white mb-1">Call us</h4>
                     <p className="text-gray-400 group-hover:text-gray-300 transition-colors">+8801933773897</p>
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors">+8801752330084</p>
                   </div>
                 </div>
                 

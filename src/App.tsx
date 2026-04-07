@@ -7,6 +7,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 
 // Lazy load all pages — they only parse/execute when first navigated to
 const Home = lazy(() => import('./pages/Home'));
@@ -76,6 +77,7 @@ export default function App() {
           </Suspense>
         </main>
         <Footer />
+        <WhatsAppButton />
       </div>
     </Router>
   );
