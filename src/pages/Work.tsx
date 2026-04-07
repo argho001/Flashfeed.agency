@@ -75,7 +75,7 @@ const Work = () => {
       <section className="relative w-full overflow-hidden" style={{ background: '#050505' }}>
         <PageHeroCanvas variant="work" />
 
-        <div className="px-6 py-16 md:py-24 max-w-7xl mx-auto relative z-10">
+        <div className="px-6 py-16 md:py-24 max-w-7xl mx-auto relative z-10 transform-gpu will-change-transform">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -90,10 +90,10 @@ const Work = () => {
               <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
               Portfolio
             </motion.div>
-            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white">
+            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white transform-gpu">
               Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Work.</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl leading-relaxed">
+            <p className="text-xl text-gray-400 max-w-2xl leading-relaxed transform-gpu">
               Real projects we've built for real businesses — from stunning websites to smart AI automations.
             </p>
           </motion.div>
@@ -146,14 +146,16 @@ const Work = () => {
                     className="absolute -inset-2 rounded-[2rem] opacity-40 group-hover:opacity-80 transition-opacity duration-500 blur-xl"
                     style={{ background: `linear-gradient(135deg, ${project.color}, ${project.color}80)` }}
                   />
-                  <div className="relative rounded-3xl overflow-hidden bg-gray-900">
+                  <div className="relative rounded-3xl overflow-hidden bg-gray-900 transform-gpu">
                     <img
                       src={project.image}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 transform-gpu">
                         <ArrowUpRight className="w-8 h-8 text-black" />
                       </div>
                     </div>

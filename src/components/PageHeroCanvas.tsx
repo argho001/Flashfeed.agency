@@ -182,20 +182,24 @@ const PageHeroCanvas: React.FC<PageHeroCanvasProps> = ({ variant }) => {
       ctx.fillStyle = '#050505';
       ctx.fillRect(0, 0, w, h);
 
-      // Draw connections between nearby particles
+      // Draw connections between nearby particles — Optimized
+      ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
+        const p1 = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
+          const p2 = particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distSq = dx * dx + dy * dy;
+          
+          if (distSq < 14400) { // 120^2
+            const dist = Math.sqrt(distSq);
             const alpha = (1 - dist / 120) * 0.15;
-            const c = particles[i].color;
+            const c = p1.color;
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(${c.r},${c.g},${c.b},${alpha})`;
-            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
@@ -214,13 +218,13 @@ const PageHeroCanvas: React.FC<PageHeroCanvasProps> = ({ variant }) => {
 
         const { r, g, b } = p.color;
         
-        // Glow
+        // Core dot + Glow combined
+        ctx.beginPath();
         const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 4);
         grad.addColorStop(0, `rgba(${r},${g},${b},${(pulseAlpha + mouseBoost) * 0.5})`);
         grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
         ctx.fillStyle = grad;
+        ctx.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
         ctx.fill();
 
         // Core dot
@@ -265,11 +269,16 @@ const PageHeroCanvas: React.FC<PageHeroCanvasProps> = ({ variant }) => {
     canvas.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
     resize();
-    initParticles();
-    initShapes();
-    draw();
+
+    // Defer heavy canvas init by 50ms so React can finish painting the page DOM first
+    const startTimer = setTimeout(() => {
+      initParticles();
+      initShapes();
+      draw();
+    }, 50);
 
     return () => {
+      clearTimeout(startTimer);
       canvas.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
@@ -277,8 +286,8 @@ const PageHeroCanvas: React.FC<PageHeroCanvasProps> = ({ variant }) => {
   }, [variant]);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden">
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    <div className="absolute inset-0 z-0 overflow-hidden transform-gpu">
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full transform-gpu" />
     </div>
   );
 };

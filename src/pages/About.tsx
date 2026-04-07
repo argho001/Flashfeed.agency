@@ -56,16 +56,16 @@ const About = () => {
           />
         </div>
 
-        <div className="px-6 py-16 md:py-24 max-w-7xl mx-auto relative z-10">
+        <div className="px-6 py-16 md:py-24 max-w-7xl mx-auto relative z-10 transform-gpu will-change-transform">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="max-w-4xl"
           >
-            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white">
+            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white transform-gpu">
               We are <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-teal-400">FlashFeed.</span>
             </h1>
-            <p className="text-xl text-gray-400 max-w-2xl leading-relaxed">
+            <p className="text-xl text-gray-400 max-w-2xl leading-relaxed transform-gpu">
               A small team with big ideas. We help businesses go digital with beautiful websites, smart AI tools, and everything in between.
             </p>
           </motion.div>
@@ -76,10 +76,12 @@ const About = () => {
       <section className="px-6 mb-24 max-w-7xl mx-auto">
         <div className="relative">
           <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-teal-500/30 blur-2xl opacity-50" />
-          <div className="aspect-[21/9] rounded-[2.5rem] overflow-hidden relative">
+          <div className="aspect-[21/9] rounded-[2.5rem] overflow-hidden relative transform-gpu">
             <img 
               src="/image-3.webp" 
               alt="FlashFeed Team" 
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
@@ -97,7 +99,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="text-center bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8 hover:border-white/20 transition-all"
+              className="text-center bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8 hover:border-white/20 transition-all transform-gpu"
             >
               <p className={`text-5xl md:text-6xl font-display font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r ${stat.color}`}>{stat.value}</p>
               <p className="text-gray-400 uppercase tracking-widest text-xs font-bold">{stat.label}</p>

@@ -133,37 +133,36 @@ const DataStreamBackground = () => {
         const { r, g, b } = cfg.color;
         const STEPS = cfg.dotted
           ? Math.max(8, Math.round((tipT - tailT) * 400 / cfg.dotGap))
-          : 90;
+          : 25; // Significant reduction from 90 to 25 for smoother perf
 
         if (!ctx) return;
 
         if (!cfg.dotted) {
-          for (let s = 0; s < STEPS; s++) {
-            const t0 = tailT + (s / STEPS) * (tipT - tailT);
-            const t1 = tailT + ((s + 1) / STEPS) * (tipT - tailT);
-            const p0 = bezPt(t0, p.ax, p.ay, p.bx, p.by, p.cx, p.cy, p.dx, p.dy);
-            const p1 = bezPt(t1, p.ax, p.ay, p.bx, p.by, p.cx, p.cy, p.dx, p.dy);
-
-            const frac = s / STEPS;
-            const a = cfg.alpha * Math.pow(frac, 1.1);  // gentle fade — tail stays vivid
-
-            ctx.beginPath();
-            ctx.moveTo(p0.x, p0.y);
-            ctx.lineTo(p1.x, p1.y);
-            ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
-            ctx.lineWidth = cfg.lw;
-            ctx.lineCap = 'round';
-            ctx.stroke();
+          // Batch non-dotted streams: one beginPath per stream instead of per segment
+          ctx.beginPath();
+          ctx.lineWidth = cfg.lw;
+          ctx.lineCap = 'round';
+          
+          for (let s = 0; s <= STEPS; s++) {
+            const t = tailT + (s / STEPS) * (tipT - tailT);
+            const pt = bezPt(t, p.ax, p.ay, p.bx, p.by, p.cx, p.cy, p.dx, p.dy);
+            if (s === 0) ctx.moveTo(pt.x, pt.y);
+            else ctx.lineTo(pt.x, pt.y);
           }
-          // Tip glow sparkle
+          
+          // Use a single stroke with a simplified alpha for performance
+          ctx.strokeStyle = `rgba(${r},${g},${b},${cfg.alpha * 0.8})`;
+          ctx.stroke();
+
+          // Tip glow: simplified to a single arc with radial gradient
           if (this.prog > 0 && this.prog < 1) {
             const pt = bezPt(tipT, p.ax, p.ay, p.bx, p.by, p.cx, p.cy, p.dx, p.dy);
+            ctx.beginPath();
             const gr = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, cfg.lw * 6);
             gr.addColorStop(0, `rgba(${r},${g},${b},${cfg.alpha})`);
             gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
-            ctx.beginPath();
-            ctx.arc(pt.x, pt.y, cfg.lw * 6, 0, Math.PI * 2);
             ctx.fillStyle = gr;
+            ctx.arc(pt.x, pt.y, cfg.lw * 6, 0, Math.PI * 2);
             ctx.fill();
           }
 
@@ -204,36 +203,12 @@ const DataStreamBackground = () => {
     };
     
     window.addEventListener('resize', handleResize);
-    build();
 
-    /* ─── Background + ambient glows ──────────────────────────────────────── */
+    /* ─── Background Optimized ──────────────────────────────────────── */
     function drawBG() {
       if (!ctx) return;
-      ctx.fillStyle = '#090d1e';
-      ctx.fillRect(0, 0, W, H);
-
-      // LEFT floor glow — teal/green, wider
-      const gL = ctx.createRadialGradient(W * 0.08, H, 0, W * 0.08, H, W * 0.52);
-      gL.addColorStop(0, 'rgba(0,165,130,0.34)');
-      gL.addColorStop(0.5, 'rgba(0,110,95,0.13)');
-      gL.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = gL;
-      ctx.fillRect(0, 0, W, H);
-
-      // RIGHT floor glow — purple/violet, wider + brighter
-      const gR = ctx.createRadialGradient(W * 0.78, H, 0, W * 0.78, H, W * 0.62);
-      gR.addColorStop(0, 'rgba(140,50,220,0.48)');
-      gR.addColorStop(0.4, 'rgba(100,30,180,0.22)');
-      gR.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = gR;
-      ctx.fillRect(0, 0, W, H);
-
-      // CENTER bottom — wider blue-violet wash
-      const gC = ctx.createRadialGradient(W * 0.5, H, 0, W * 0.5, H, W * 0.35);
-      gC.addColorStop(0, 'rgba(80,110,210,0.20)');
-      gC.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = gC;
-      ctx.fillRect(0, 0, W, H);
+      // Clear the canvas efficiently
+      ctx.clearRect(0, 0, W, H);
     }
 
     /* ─── Main loop ────────────────────────────────────────────────────────── */
@@ -242,17 +217,32 @@ const DataStreamBackground = () => {
       for (const s of streams) { s.draw(); s.update(); }
       animationId = requestAnimationFrame(loop);
     }
-    loop();
+
+    // Defer heavy canvas init by 50ms so React can finish painting the page DOM first
+    const startTimer = setTimeout(() => {
+      build();
+      loop();
+    }, 50);
 
     return () => {
+      clearTimeout(startTimer);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden" style={{ background: '#090d1e' }}>
-      <canvas ref={canvasRef} className="block absolute top-0 left-0 w-full h-full" />
+    <div className="absolute inset-0 z-0 overflow-hidden" 
+      style={{ 
+        background: '#090d1e',
+        backgroundImage: `
+          radial-gradient(circle at 8% 100%, rgba(0,165,130,0.24) 0%, rgba(0,110,95,0.08) 40%, transparent 70%),
+          radial-gradient(circle at 78% 100%, rgba(140,50,220,0.38) 0%, rgba(100,30,180,0.15) 40%, transparent 70%),
+          radial-gradient(circle at 50% 100%, rgba(80,110,210,0.15) 0%, transparent 60%)
+        `
+      }}
+    >
+      <canvas ref={canvasRef} className="block absolute top-0 left-0 w-full h-full transform-gpu" />
       {/* Top fade out to match page background #050505 */}
       <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none" />
       {/* Bottom fade out to match page background #050505 */}

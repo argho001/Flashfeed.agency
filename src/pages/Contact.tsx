@@ -39,6 +39,7 @@ const Contact = () => {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
+              className="transform-gpu will-change-transform"
             >
               <motion.div 
                 initial={{ opacity: 0, y: -10 }} 
@@ -50,11 +51,11 @@ const Contact = () => {
                 Available for work
               </motion.div>
               
-              <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter text-white">
+              <h1 className="text-5xl md:text-7xl font-display font-bold mb-8 tracking-tighter text-white transform-gpu">
                 Let's build <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-400 to-orange-400">something iconic.</span>
               </h1>
-              <p className="text-xl text-gray-400 mb-12 leading-relaxed max-w-md">
+              <p className="text-xl text-gray-400 mb-12 leading-relaxed max-w-md transform-gpu">
                 Have a project in mind? We'd love to hear about it. Tell us what you need and we'll get back to you within 24 hours.
               </p>
 
@@ -112,12 +113,12 @@ const Contact = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="relative"
+            className="relative transform-gpu will-change-transform"
           >
             {/* Massive glow behind the form */}
             <div className="absolute -inset-4 bg-gradient-to-r from-pink-500/20 via-rose-500/20 to-orange-500/20 rounded-[3rem] blur-2xl opacity-60" />
             
-            <div className="bg-white/[0.02] backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-2xl relative">
+            <div className="bg-white/[0.02] backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-2xl relative transform-gpu">
               <AnimatePresence mode="wait">
                 {isSubmitted ? (
                   <motion.div 

@@ -12,10 +12,10 @@ const Home = () => {
     { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/ffffff', hex: '#ffffff' },
     { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB', hex: '#61DAFB' },
     { name: 'Tailwind', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4', hex: '#06B6D4' },
-    { name: 'OpenAI', icon: 'https://cdn.simpleicons.org/openai/10A37F', hex: '#10A37F' },
+    { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6', hex: '#3178C6' },
     { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3ECF8E', hex: '#3ECF8E' },
     { name: 'HTML5', icon: 'https://cdn.simpleicons.org/html5/E34F26', hex: '#E34F26' },
-    { name: 'CSS3', icon: 'https://cdn.simpleicons.org/css3/1572B6', hex: '#1572B6' },
+    { name: 'CSS', icon: 'https://cdn.simpleicons.org/css/1572B6', hex: '#1572B6' },
     { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E', hex: '#F7DF1E' },
     { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/5FA04E', hex: '#5FA04E' },
     { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E', hex: '#F24E1E' },
@@ -80,16 +80,16 @@ const Home = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl z-10"
+          className="max-w-5xl z-10 will-change-transform"
         >
-          <h1 className="text-6xl md:text-8xl font-display font-bold leading-[1.1] mb-8 tracking-tighter flex flex-wrap justify-center gap-x-4 md:gap-x-6">
+          <h1 className="text-6xl md:text-8xl font-display font-bold leading-[1.1] mb-8 tracking-tighter flex flex-wrap justify-center gap-x-4 md:gap-x-6 transform-gpu">
             {['We', 'build', 'what', 'your', 'business', 'needs'].map((word, i) => (
               <motion.span
                 key={i}
                 initial={{ opacity: 0.2, filter: 'blur(10px)' }}
                 animate={{ opacity: 1, filter: 'blur(0px)' }}
                 transition={{ duration: 0.8, delay: i * 0.15 }}
-                className="text-white"
+                className="text-white will-change-[opacity,filter]"
               >
                 {word}
               </motion.span>
@@ -98,18 +98,18 @@ const Home = () => {
               initial={{ opacity: 0.2, filter: 'blur(10px)' }}
               animate={{ opacity: 1, filter: 'blur(0px)' }}
               transition={{ duration: 0.8, delay: 6 * 0.15 }}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 w-full mt-2"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300 w-full mt-2 will-change-[opacity,filter]"
             >
               to grow.
             </motion.span>
           </h1>
-          <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed transform-gpu">
             FlashFeed is a digital growth agency. We build websites, create marketing strategies, and automate business processes to help growing businesses scale faster.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
               to="/contact"
-              className="bg-white/90 backdrop-blur-md text-black px-12 py-5 rounded-xl text-xl font-bold hover:bg-white transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+              className="bg-white/90 backdrop-blur-md text-black px-12 py-5 rounded-xl text-xl font-bold hover:bg-white transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.2)] transform-gpu"
             >
               Set up a Meeting
             </Link>
@@ -121,13 +121,15 @@ const Home = () => {
       {/* Tech Stack Ticker */}
       <section className="py-12 border-y border-white/5 overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-teal-500/5 pointer-events-none blur-3xl opacity-50" />
-        <div className="flex whitespace-nowrap animate-scroll items-center relative z-10 w-fit">
+        <div className="flex whitespace-nowrap animate-scroll items-center relative z-10 w-fit transform-gpu will-change-transform">
           {[...techStack, ...techStack].map((tech, i) => (
-            <div key={i} className="mx-12 flex items-center gap-4 group cursor-default hover:scale-110 transition-transform duration-300">
+            <div key={i} className="mx-12 flex items-center gap-4 group cursor-default hover:scale-110 transition-transform duration-300 transform-gpu">
               <img 
                 src={tech.icon} 
                 alt={tech.name} 
                 className="w-10 h-10 object-contain" 
+                loading="lazy"
+                decoding="async"
                 style={{ filter: `drop-shadow(0 0 12px ${tech.hex})` }}
               />
               <span 
@@ -169,10 +171,12 @@ const Home = () => {
                   className="absolute -inset-3 rounded-[2rem] opacity-50 group-hover:opacity-100 transition-opacity duration-700 blur-2xl"
                   style={{ background: i === 0 ? 'linear-gradient(135deg, #3b82f6, #06b6d4)' : 'linear-gradient(135deg, #f97316, #ef4444)' }}
                 />
-                <div className={cn("aspect-[4/3] rounded-3xl overflow-hidden relative", project.color)}>
+                <div className={cn("aspect-[4/3] rounded-3xl overflow-hidden relative transform-gpu", project.color)}>
                   <img
                     src={project.image}
                     alt={project.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
@@ -208,11 +212,13 @@ const Home = () => {
                 ))}
               </div>
             </div>
-            <div className="relative">
+            <div className="relative transform-gpu">
               <div className="aspect-square rounded-3xl overflow-hidden">
                 <img
                   src="/image-3.webp"
                   alt="Our Work"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                 />
               </div>

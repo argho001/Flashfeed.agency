@@ -57,7 +57,7 @@ const Services = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl"
+            className="max-w-4xl transform-gpu will-change-transform"
           >
             <motion.div 
               initial={{ opacity: 0, x: -20 }} 
@@ -68,7 +68,7 @@ const Services = () => {
               <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
               Our Services
             </motion.div>
-            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white">
+            <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight mb-8 tracking-tighter text-white transform-gpu">
               What we <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-400">offer.</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-2xl leading-relaxed">
@@ -95,10 +95,10 @@ const Services = () => {
             >
               {/* Card glow */}
               <div className={`absolute -inset-1 rounded-[2rem] opacity-0 group-hover:opacity-40 transition-opacity duration-500 blur-xl bg-gradient-to-r ${service.gradient}`} />
-              <div className="relative bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10 hover:border-white/20 transition-all duration-500">
+              <div className="relative bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10 hover:border-white/20 transition-all duration-500 transform-gpu">
                 <div className="flex items-start justify-between mb-8">
                   <span className={`text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b ${service.gradient} opacity-30`}>{service.number}</span>
-                  <div className={`p-4 rounded-2xl bg-gradient-to-br ${service.gradient} text-white shadow-lg`}>
+                  <div className={`p-4 rounded-2xl bg-gradient-to-br ${service.gradient} text-white shadow-lg transform-gpu`}>
                     {service.icon}
                   </div>
                 </div>
@@ -142,8 +142,8 @@ const Services = () => {
                 {i < 3 && (
                   <div className="hidden md:block absolute top-10 left-full w-full h-px bg-gradient-to-r from-blue-500/30 to-transparent z-0" />
                 )}
-                <div className="bg-white/[0.03] border border-white/[0.08] p-8 rounded-3xl hover:border-blue-500/30 transition-all relative z-10">
-                  <div className="inline-flex px-4 py-2 bg-gradient-to-r from-blue-600/20 to-teal-600/20 text-blue-400 rounded-full text-sm font-bold mb-6 border border-blue-500/20">
+                <div className="bg-white/[0.03] border border-white/[0.08] p-8 rounded-3xl hover:border-blue-500/30 transition-all relative z-10 transform-gpu">
+                  <div className="inline-flex px-4 py-2 bg-gradient-to-r from-blue-600/20 to-teal-600/20 text-blue-400 rounded-full text-sm font-bold mb-6 border border-blue-500/20 transform-gpu">
                     Step {item.step}
                   </div>
                   <h4 className="text-xl font-display font-bold mb-4 text-white">{item.title}</h4>
